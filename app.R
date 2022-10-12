@@ -20,7 +20,7 @@ ui <- function() {
              plotOutput("main_plot", height = "480px", width = "100%", brush = "plot_brush", hover = "plot_hover")
       ),
       column(7,
-             radioButtons("ontology", "Ontology:", choices = c("GO" = "go", "Reactome" = "re", "KEGG" = "kg", "BioPlanet" = "bp"), inline = TRUE),
+             radioButtons("ontology", "Ontology:", choices = c("GO" = "go", "Reactome" = "re", "KEGG" = "kg"), inline = TRUE),
              div(style = 'height: 480px; overflow-y: scroll', tableOutput("enrichment")),
       )
     )
