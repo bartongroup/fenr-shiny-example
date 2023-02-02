@@ -1,3 +1,8 @@
+require(ggplot2)
+require(dplyr)
+require(rlang)
+require(fenr)
+
 #' Volcano plot
 #'
 #' @param d Tibble with x, y and FDR
@@ -85,7 +90,7 @@ enrichment_table <- function(de, term_data, input, max_points = 10000) {
     sel <- brushed$gene_id
     n <- length(sel)
     if (n > 0 && n <= max_points) {
-      fe <- functional_enrichment(de$gene_id, sel, terms, feat2name = gene2symbol)
+      fe <- fenr::functional_enrichment(de$gene_id, sel, terms, feat2name = gene2symbol)
       if(!is.null(fe))
         fe <- dplyr::filter(fe, p_adjust < 0.05 & n_with_sel > 2)
     } else if (n > 0) {

@@ -1,11 +1,10 @@
 library(shiny)
-library(tidyverse)
-library(fenr)
+library(readr)
 
 source("R/func.R")
 
-de <- read_rds("data/yeast_de.rds")
-term_data <- read_rds("data/term_data.rds")
+de <- readr::read_rds("data/yeast_de.rds")
+term_data <- readr::read_rds("data/term_data.rds")
 
 
 ui <- function() {
