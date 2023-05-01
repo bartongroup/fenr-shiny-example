@@ -1,7 +1,4 @@
-require(fenr)
 require(dplyr)
-require(purrr)
-require(rlang)
 
 #' Get functional term data
 #'
@@ -32,23 +29,18 @@ get_functional_terms <- function(species, all_genes) {
   cat("Loading KEGG data\n")
   kg <- fenr::fetch_kegg(sp$kg)
 
+  # Reduce large GO data
   go$mapping <- go$mapping |>
-    dplyr::rename(gene_id = gene_synonym)
+    dplyr::rename(gene_id = gene_synonym) |>
+    dplyr::filter(gene_id %in% all_genes)
+  go$terms <- go$terms |>
+    dplyr::filter(term_id %in% unique(go$mapping$term_id))
 
-  terms <- list(
+  list(
     go = go,
     re = re,
     kg = kg
   )
-
-  # Prepare for fenr
-  ontologies <- names(terms)
-  purrr::map(ontologies, function(ont) {
-    trm <- terms[[ont]]
-    fenr::prepare_for_enrichment(trm$terms, trm$mapping, all_genes, feature_name = "gene_id")
-  }) |>
-    rlang::set_names(ontologies)
-
 }
 
 

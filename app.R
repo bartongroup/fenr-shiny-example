@@ -4,7 +4,8 @@ library(readr)
 source("R/func.R")
 
 de <- readr::read_rds("data/yeast_de.rds")
-term_data <- readr::read_rds("data/term_data.rds")
+term_data <- readr::read_rds("data/term_data.rds") |>
+  prepare_for_fenr()
 
 
 ui <- function() {

@@ -116,3 +116,17 @@ main_plot <- function(de, input) {
 }
 
 
+#' Convert ontology data into fenr format
+#'
+#' @param terms A list of lists, each containing mapping and terms
+#'
+#' @return A list of fenr objects
+prepare_for_fenr <- function(terms) {
+  ontologies <- names(terms)
+  purrr::map(ontologies, function(ont) {
+    trm <- terms[[ont]]
+    fenr::prepare_for_enrichment(trm$terms, trm$mapping, all_genes, feature_name = "gene_id")
+  }) |>
+    rlang::set_names(ontologies)
+}
+
