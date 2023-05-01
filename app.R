@@ -4,8 +4,9 @@ library(readr)
 source("R/func.R")
 
 de <- readr::read_rds("data/yeast_de.rds")
+all_genes <- unique(de$gene_id)
 term_data <- readr::read_rds("data/term_data.rds") |>
-  prepare_for_fenr()
+  prepare_for_fenr(all_genes)
 
 
 ui <- function() {
